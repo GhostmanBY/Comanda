@@ -1,39 +1,42 @@
-from customtkinter import *
-from tkinter import ttk
-import tkinter as tk
-import os
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtCore import Qt
 
-from Mesas.peidos import pedidos
+numero_de_mesas = [f"Mesa{i+1}" for i in range(5)]
+
+def funciona_mesas(mesa):
+    print(f"mesa número {mesa[4]}")
 
 def main(codigo):
-    root = CTk()
-    screen_height = root.winfo_screenheight()
-    taskbar_height = 40
-    root.geometry(f"500x{screen_height - taskbar_height}+0+0")
+    app = QApplication(sys.argv)
 
-    root.title("Comanda")
-    root.resizable(False, True)
-
-    height = root.winfo_screenheight()
+    # Crear la ventana principal
+    window = QMainWindow()
+    window.setWindowTitle("Como ser gay")
+    screen_height = app.desktop().screenGeometry().height()
+    taskbar_height = 80
+    window.setGeometry(0, 0, 500, screen_height - taskbar_height)
     
-    notebook_principal = ttk.Notebook(root)
-    notebook_principal.pack(fill='both', expand=True)
-
-    frame_main_mesas = CTkFrame(notebook_principal, corner_radius=0)
-    notebook_principal.add(frame_main_mesas, text="Mesas") 
+    # Crear el widget central y su layout
+    central_widget = QWidget()
+    layout = QVBoxLayout()
+    central_widget.setLayout(layout)
+    window.setCentralWidget(central_widget)
     
-    frame_pedido = CTkFrame(master=frame_main_mesas,
-                            fg_color="#929292",
-                            height=height, 
-                            width=500, 
-                            border_width=5,
-                            border_color="black")
-    frame_pedido.place(relx=0.5, rely=0.5, anchor="center")
+    # Crear y agregar el QComboBox al layout
+    combo_box = QComboBox()
+    combo_box.addItems(numero_de_mesas)
+    combo_box.setFixedWidth(350)  # Ajustar el ancho del QComboBox
+    combo_box.setStyleSheet("font-size: 16px;")  # Cambiar el estilo del combo box
+    layout.addWidget(combo_box, alignment=Qt.AlignCenter)
     
-    
-    
-    root.mainloop()
-    
+    # Crear y agregar el botón al layout
+    button = QPushButton("ok")
+    button.setFixedSize(50,30)#(x,y)
+    button.setStyleSheet("font-size: 25px;")
+    button.clicked.connect(lambda: funciona_mesas(combo_box.currentText()))
+    window.show()
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
     main("AOE505")

@@ -1,4 +1,5 @@
 #liberias de diseño 
+import tkinter as tk
 from customtkinter import *
 from Ventana_Principal import main
 
