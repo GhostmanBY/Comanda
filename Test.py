@@ -1,4 +1,4 @@
-from Panel_Admin_Back import cargar_productos, Modificar_producto, eliminar_producto, Mostrar_productos
+from Backend.Panel_Admin_Back import cargar_productos, Modificar_producto, eliminar_producto, Mostrar_productos
 
 from customtkinter import* 
 
