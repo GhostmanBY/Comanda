@@ -18,7 +18,18 @@ def funcion():
         texto1.insert("1.0", f"{producto['Nombre']}\n")
         texto1.insert("2.0", f"{producto['Precio']}$\n")
         texto1.insert("3.0", f"{producto['Stock']}\n")
+
+def funcion_2():
+    txto2.pack_forget()
+    txto3.pack_forget()
+
+    boton1.pack_forget()
+    boton2.pack_forget()
+    boton3.pack_forget()
+    boton4.pack_forget()
     
+    boton5 = CTkButton(root, width=200, height=50, text="Eliminar", command=lambda: eliminar_producto(txto1.get()))
+    boton5.pack()
 root = CTk()
 root.title("Inicio")
 root.geometry("500x500")
@@ -35,8 +46,14 @@ txto3.pack()
 boton1 = CTkButton(root, width=200, height=50, text="aceptar", command=lambda: cargar_productos(txto1.get(), txto2.get(), txto3.get()))
 boton1.pack(pady=20)
 
-boton2 = CTkButton(root, width=200, height=50, text="aceptar", command= funcion)
+boton2 = CTkButton(root, width=200, height=50, text="mostrar", command= funcion)
 boton2.pack(pady=20)
+
+boton3 = CTkButton(root, width=200, height=50, text="modificar", command=lambda: Modificar_producto(txto1.get(), txto2.get(), txto3.get()))
+boton3.pack(pady=20)
+
+boton4 = CTkButton(root, width=200, height=50, text="Eliminar", command= funcion_2)
+boton4.pack(pady=20)
 
 root.mainloop()
 

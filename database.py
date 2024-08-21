@@ -1,6 +1,6 @@
 import sqlite3
 
-con=sqlite3.connect("menu.db")
+con=sqlite3.connect("menu_adm.db")
 cur=con.cursor()
 
 cur.execute(

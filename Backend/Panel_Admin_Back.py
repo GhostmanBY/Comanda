@@ -64,6 +64,7 @@ def eliminar_producto(nombre):
         return f"Producto {nombre} eliminado exitosamente."
     else:
         return "El archivo JSON no existe o está vacío."
+    
 if __name__ == "__main__":
     op = 0
     while op != 5:
