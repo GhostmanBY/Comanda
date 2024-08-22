@@ -1,7 +1,7 @@
 import os
 import sqlite3 as sql
 
-ruta_db = os.path.join("D:/Users/Usuario/Documents/GitHub/Comanda/ArchivosDB", "Productos.db")
+ruta_db = os.path.join("DB", "Productos.db")
 
 def crear_tablas():
 
