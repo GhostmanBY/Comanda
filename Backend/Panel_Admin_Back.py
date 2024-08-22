@@ -1,103 +1,124 @@
 import os
-import json
+import sqlite3 as sql
 
-def cargar_productos(nombre, precio, stock):
-    nuevo_producto = {
-        "Nombre": nombre,
-        "Precio": precio,
-        "Stock": stock
-    }
+ruta_db = os.path.join("D:/Users/Usuario/Documents/GitHub/Comanda/ArchivosDB", "Productos.db")
 
-    ruta_archivo = "archivo.json"
+def crear_tablas():
 
-    # Verificar si el archivo ya existe y tiene contenido
-    if os.path.exists(ruta_archivo) and os.path.getsize(ruta_archivo) > 0:
-        with open(ruta_archivo, "r") as archivo:
-            datos = json.load(archivo)
-    else:
-        datos = []
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
 
-    # Agregar el nuevo producto a la lista
-    datos.append(nuevo_producto)
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS Productos(
+        Nombre text,
+        Precio integer,
+        Stock integer)"""
+    )
 
-    # Guardar los datos en el archivo
-    with open(ruta_archivo, "w") as archivo:
-        json.dump(datos, archivo, indent=4)
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS Usuarios(
+        Mozo text,
+        Codigo text,
+        Plaza integer,
+        Ingreso integer)"""
+    )
 
-def Mostrar_productos():
-    with open("archivo.json", "r") as archivo:
-        datos = json.load(archivo)
+    conn.commit()
+    conn.close()
+
+def Cargar_Producto(name, precio, stock):
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+    
+    instruccion = f"INSERT INTO Productos VALUES('{name}', {precio}, {stock})"
+    cursor.execute(instruccion)
+
+    conn.commit()
+    conn.close()
+
+def Modificar_Productos(name, categoria, nuevo_valor):
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    instruccion = f"UPDATE Productos SET {categoria} = {nuevo_valor} WHERE Nombre like '{name}'"
+    cursor.execute(instruccion)
+
+    conn.commit()
+    conn.close()
+
+def Mostrar_Productos():
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
+
+    instruccion = f"SELECT * FROM Productos"
+    cursor.execute(instruccion)
+
+    datos = cursor.fetchall()
+
+    conn.commit()
+    conn.close()
+
     return datos
-def Modificar_producto(nombre, nuevo_precio, nuevo_stock):
-    ruta_archivo = "archivo.json"
+
+def Eliminar_Producto(name):
+    conn = sql.connect(ruta_db)
+    cursor = conn.cursor()
     
-    with open(ruta_archivo, "r") as archivo:
-        datos = json.load(archivo)
+    instruccion = f"DELETE FROM Productos WHERE Nombre like '{name}'"
+    cursor.execute(instruccion)
 
-    # Buscar y modificar el producto
-    for producto in datos:
-        if producto["Nombre"] == nombre:
-            producto["Precio"] = nuevo_precio
-            producto["Stock"] = nuevo_stock
-            break
+    conn.commit()
+    conn.close()
 
-    # Guardar los cambios
-    with open(ruta_archivo, "w") as archivo:
-        json.dump(datos, archivo, indent=4)
+#def Registro_Empleado()
 
-def eliminar_producto(nombre):
-    ruta_archivo = 'archivo.json'
 
-    # Verificar si el archivo existe y tiene contenido
-    if os.path.exists(ruta_archivo) and os.path.getsize(ruta_archivo) > 0:
-        with open(ruta_archivo, 'r') as archivo:
-            datos = json.load(archivo)
-        if nombre in datos:
-            # Filtrar la lista para eliminar el producto con el nombre dado
-            datos = [producto for producto in datos if producto['Nombre'] != nombre]
-        else:
-            return f"El nombre ingresado no esta en la lista de los productos"
-        # Guardar la lista actualizada en el archivo
-        with open(ruta_archivo, 'w') as archivo:
-            json.dump(datos, archivo, indent=4)
-
-        return f"Producto {nombre} eliminado exitosamente."
-    else:
-        return "El archivo JSON no existe o está vacío."
-    
 if __name__ == "__main__":
+    crear_tablas()
+
     op = 0
     while op != 5:
         op = int(input("""
-    Ingrese la opcion que quiere realizar:
-    1- Cargar producto
-    2- Mostrar producto
-    3- Modificar producto
-    4- Eliminar producto
-    5- Salir
-    RTA: """))
+Ingrese la opcion que quiere realizar:
+1- Cargar producto
+2- Mostrar producto
+3- Modificar producto
+4- Eliminar producto
+5- Salir
+RTA: """))
 
         if op == 1:
             nombre = input("Ingrese el nombre del producto: ")
             precio = int(input("Ingrese el precio del producto: "))
             stock = int(input("Ingrese el stock del producto: "))
-            cargar_productos(nombre, precio, stock)
-            input("Presione enter...")
-            os.system("cls")
-        elif op == 2:
-            Mostrar_productos()
-            input("Presione enter...")
-            os.system("cls")
-        elif op == 3:
-            nombre = input("Ingrese el nombre del producto: ")
-            precio = int(input("Ingrese el precio del producto: "))
-            stock = int(input("Ingrese el stock del producto: "))
-            Modificar_producto(nombre, precio, stock)
-            input("Presione enter...")
-            os.system("cls")
-        elif op == 4:
-            nombre = input("Ingrese el nombre del producto a eliminar: ")
-            eliminar_producto(nombre)
+            Cargar_Producto(nombre, precio, stock)
             input("Presione enter...")
             os.system("cls")
 
+        elif op == 2:
+            datos = Mostrar_Productos()
+            for i in range(0, len(datos)):
+                for j in range(0, 3):
+                    if j == 0:
+                        print(f"Nombre: {datos[i][j]}")
+                    elif j == 1:
+                        print(f"Precio: {datos[i][j]}")
+                    elif j == 2:
+                        print(f"Stock: {datos[i][j]}")
+                print("-"*15)
+            input("Preisone Enter...")
+            os.system("cls")
+
+        elif op == 3:
+            nombre = input("Ingrese el nombre del producto: ")
+            categoria = input("Ingrese lo que va a modificar si el preico o el stock: ")
+            valor_nuevo = int(input(f"Ingrese el {categoria} del producto: "))
+            Modificar_Productos(nombre, categoria.capitalize(), valor_nuevo)
+            input("Presione enter...")
+            os.system("cls")
+
+        elif op == 4:
+            nombre = input("Ingrese el nombre del producto a eliminar: ")
+            Eliminar_Producto(nombre)
+            input("Presione enter...")
+            os.system("cls")
