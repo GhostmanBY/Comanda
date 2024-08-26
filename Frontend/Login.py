@@ -2,6 +2,29 @@
 import tkinter as tk
 from customtkinter import *
 from Ventana_Principal import main
+import sqlite3
+
+ruta_db = os.path.join("DB", "Productos.db")
+# Login.py
+def verificar(name, code):
+    conn = sqlite3.connect(ruta_db)
+    cursor = conn.cursor()
+    
+    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}'"
+    cursor.execute(instruccion)
+    
+    datos = cursor.fetchall()
+    
+    conn.commit()
+    conn.close()
+    
+    if datos != []:
+        if code == datos[0][1]:
+            return print("Bienvenido")
+        else:
+            return print("Su codigo no es correcto")
+    else:
+        return print("Usted no esta en el sistema")
 
 #define una variable para darle los parametros de las letras
 letra = "Arial", 30, "bold"
@@ -24,15 +47,18 @@ frame_decorativo.place(relx=0.5, rely=0.5, anchor="center") #le da la ubicacion 
 
 #crea un recuadro de texto
 text_1 = CTkLabel(master=frame_decorativo, text="Ingrese su codigo", font=letra) #se le da los parametros
-text_1.place(relx=0.5, rely=0.4, anchor="center") #le da la ubicacion al texto
+text_1.place(relx=0.5, rely=0.3, anchor="center") #le da la ubicacion al texto
+
+campo_name = CTkEntry(master=frame_decorativo, placeholder_text="nahuel")
+campo_name.place(relx=0.5, rely=0.4, anchor="center")
 
 #crea un campo para escribir 
-campo_ingreso = CTkEntry(master=frame_decorativo, placeholder_text="AOE505") #le da los parametros
-campo_ingreso.place(relx=0.5, rely=0.5, anchor="center") #le da la ubicacion al campo de texto
+campo_codigo = CTkEntry(master=frame_decorativo, placeholder_text="AOE505") #le da los parametros
+campo_codigo.place(relx=0.5, rely=0.5, anchor="center") #le da la ubicacion al campo de texto
 
 """crea un boton y a su vez pasa los parametros 
 y en especifico el parametro command= lambda permite que se le pasen valores a la funcion que usa el boton"""
-boton_acept = CTkButton(master=frame_decorativo, text="Ingresar", command= lambda: accion(campo_ingreso.get(), root)) 
+boton_acept = CTkButton(master=frame_decorativo, text="Ingresar", command= lambda: verificar(campo_name.get(), campo_codigo.get())) 
 boton_acept.place(relx=0.5, rely=0.6, anchor="center") #le da la ubicacion al boton
 
 #mantien en un bucle la ventana para que se muestre

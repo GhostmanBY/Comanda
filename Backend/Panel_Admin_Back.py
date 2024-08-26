@@ -127,7 +127,7 @@ def verificar(name, code):
     conn.commit()
     conn.close()
     
-    if datos != None:
+    if datos != []:
         if code == datos[0][1]:
             return True
         else:
@@ -233,7 +233,7 @@ RTA: """))
                     code = input("Ingrese su codigo: ")
                     
                     resultado = verificar(name, code)
-                    if resultado:
+                    if resultado == True:
                         print("Bienvenido")
                     elif resultado == 2:
                         print("Usted no esta en el sistema")
