@@ -34,16 +34,14 @@ def crear_tablas():
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Productos(
         Nombre text,
-        Precio integer,
-        Stock integer)"""
+        Precio integer)"""
     )
 
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Usuarios(
         Mozo text,
         Codigo text,
-        Plaza integer,
-        Ingreso text)"""
+        Plaza integer)"""
     )
 
     conn.commit()
@@ -53,8 +51,8 @@ def Cargar_Producto(name, precio, stock):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
     
-    instruccion = f"INSERT INTO Productos VALUES('{name}', {precio}, {stock})"
-    cursor.execute(instruccion)
+    instruccion = "INSERT INTO Productos (nombre, precio, stock) VALUES (?, ?, ?)"
+    cursor.execute(instruccion, (name, precio, stock))
 
     conn.commit()
     conn.close()
@@ -93,11 +91,11 @@ def Eliminar_Producto(name):
     conn.commit()
     conn.close()
 
-def Registro_Empleado(name, codigo, Plaza, Fecha):
+def Registro_Empleado(name, codigo, Plaza):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
 
-    instruccion = f"INSERT INTO Usuarios VALUES('{name}', '{codigo}', {Plaza}, '{Fecha}')"
+    instruccion = f"INSERT INTO Usuarios VALUES('{name}', '{codigo}', {Plaza})"
     cursor.execute(instruccion)
 
     conn.commit()
@@ -117,6 +115,26 @@ def Mostrar_Empleados():
 
     return datos
 
+def verificar(name, code):
+    conn = sqlite3.connect(ruta_db)
+    cursor = conn.cursor()
+    
+    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}'"
+    cursor.execute(instruccion)
+    
+    datos = cursor.fetchall()
+    
+    conn.commit()
+    conn.close()
+    
+    if datos != None:
+        if code == datos[0][1]:
+            return True
+        else:
+            return False
+    else:
+        return 2
+    
 if __name__ == "__main__":
     crear_tablas()
 
@@ -178,14 +196,15 @@ RTA: """))
                     os.system("cls")
         elif po == 2:
             pop = 0
-            while pop != 5:
+            while pop != 6:
                 pop = int(input("""
 Ingrese la opciona que quiere realizar:
 1- Registrar nuevo empleado
 2- Mostrar empleados
 3- Modificar empleado
 4- Eliminar empleado
-5- Volver
+5- Verificar
+6- Volver
 RTA: """))
                 if pop == 1:
                     name = input("Ingrese el nombre del mozo: ")
@@ -193,23 +212,32 @@ RTA: """))
                     codigo = Generar_Codigo()
 
                     Plaza = int(input("Ingrese la plaza a la que va a estar asiganado: "))
-
-                    Fecha = datetime.now().strftime("%H:%M")
         
-                    Registro_Empleado(name, codigo, Plaza, Fecha)
+                    Registro_Empleado(name, codigo, Plaza)
                     os.system("cls")
                 elif pop == 2:
                     datos = Mostrar_Empleados()
                     for i in range(0, len(datos)):
-                        for j in range(0, 4):
+                        for j in range(0, 3):
                             if j == 0:
                                 print(f"Mozo: {datos[i][j]}")
                             elif j == 1:
                                 print(f"Codigo: {datos[i][j]}")
                             elif j == 2:
                                 print(f"Plaza: {datos[i][j]}")
-                            elif j == 3:
-                                print(f"Horario: {datos[i][j]}")
                         print("-"*15)
+                    input("Preisone Enter...")
+                    os.system("cls")
+                elif pop == 5:
+                    name = input("Ingrese su nombre: ")
+                    code = input("Ingrese su codigo: ")
+                    
+                    resultado = verificar(name, code)
+                    if resultado:
+                        print("Bienvenido")
+                    elif resultado == 2:
+                        print("Usted no esta en el sistema")
+                    else:
+                        print("Su codigo no es correcto")
                     input("Preisone Enter...")
                     os.system("cls")
