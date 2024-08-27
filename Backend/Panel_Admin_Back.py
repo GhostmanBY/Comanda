@@ -34,14 +34,16 @@ def crear_tablas():
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Productos(
         Nombre text,
-        Precio integer)"""
+        Precio integer,
+        Stock integer)"""
     )
 
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Usuarios(
         Mozo text,
         Codigo text,
-        Plaza integer)"""
+        Plaza integer,
+        Ingreso text)"""
     )
 
     conn.commit()
@@ -91,12 +93,12 @@ def Eliminar_Producto(name):
     conn.commit()
     conn.close()
 
-def Registro_Empleado(name, codigo, Plaza):
+def Registro_Empleado(name, codigo, Plaza, Fecha):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
-    
-    instruccion = f"INSERT INTO Usuarios VALUES(mozo, codigo, plaza)"
-    cursor.execute(instruccion, (name, codigo,Plaza))
+
+    instruccion = f"INSERT INTO Usuarios VALUES('{name}', '{codigo}', {Plaza}, '{Fecha}')"
+    cursor.execute(instruccion)
 
     conn.commit()
     conn.close()
