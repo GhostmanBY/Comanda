@@ -3,7 +3,7 @@ import random
 from datetime import datetime
 import sqlite3
 
-ruta_db = os.path.join("DB", "Productos.db")
+ruta_db = os.path.join("DB", "Panel_admin.db")
 
 def Generar_Codigo():    
     lista_Letras = ["A", "B", "C", "D", "E", "F", "G",
@@ -94,9 +94,9 @@ def Eliminar_Producto(name):
 def Registro_Empleado(name, codigo, Plaza):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
-
-    instruccion = f"INSERT INTO Usuarios VALUES('{name}', '{codigo}', {Plaza})"
-    cursor.execute(instruccion)
+    
+    instruccion = f"INSERT INTO Usuarios VALUES(mozo, codigo, plaza)"
+    cursor.execute(instruccion, (name, codigo,Plaza))
 
     conn.commit()
     conn.close()
@@ -115,6 +115,24 @@ def Mostrar_Empleados():
 
     return datos
 
+def Modificar_Empleados(name, categoria, valor):
+    conn  = sqlite3.connect(ruta_db)
+    cursor = conn.cursor()
+    
+    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}"
+    cursor.execute(instruccion)
+    
+    datos = cursor.fetchall()
+    
+    if datos != []:
+        instruccion = f"UPDATE Usuarios SET {categoria} = {valor} WHERE Mozo like {name}"
+        cursor.execute(instruccion)
+    else:
+        return "No se encunetra el nombre del mozo ingresado"
+        
+    conn.commit()
+    conn.close()
+    
 def verificar(name, code):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
@@ -134,12 +152,13 @@ def verificar(name, code):
             return False
     else:
         return 2
-    
+
 if __name__ == "__main__":
     crear_tablas()
 
     po = 0
     while po != 3:
+        os.system("cls")
         po = int(input("""
 Ingrese la opcion que quiere realizar
 1- Carta
@@ -196,7 +215,7 @@ RTA: """))
                     os.system("cls")
         elif po == 2:
             pop = 0
-            while pop != 6:
+            while pop != 5:
                 pop = int(input("""
 Ingrese la opciona que quiere realizar:
 1- Registrar nuevo empleado
@@ -207,23 +226,29 @@ Ingrese la opciona que quiere realizar:
 6- Volver
 RTA: """))
                 if pop == 1:
+                    datos = Mostrar_Empleados()
+                    numero = len(datos) + 1
+                    
                     name = input("Ingrese el nombre del mozo: ")
                     
                     codigo = Generar_Codigo()
 
                     Plaza = int(input("Ingrese la plaza a la que va a estar asiganado: "))
         
-                    Registro_Empleado(name, codigo, Plaza)
+                    Registro_Empleado(numero, name, codigo, Plaza)
+                    input("Presione enter...")
                     os.system("cls")
                 elif pop == 2:
                     datos = Mostrar_Empleados()
                     for i in range(0, len(datos)):
-                        for j in range(0, 3):
+                        for j in range(0, 4):
                             if j == 0:
-                                print(f"Mozo: {datos[i][j]}")
+                                print(f"Numero: {datos[i][j]}")
                             elif j == 1:
-                                print(f"Codigo: {datos[i][j]}")
+                                print(f"Mozo: {datos[i][j]}")
                             elif j == 2:
+                                print(f"Codigo: {datos[i][j]}")
+                            elif j == 3:
                                 print(f"Plaza: {datos[i][j]}")
                         print("-"*15)
                     input("Preisone Enter...")
