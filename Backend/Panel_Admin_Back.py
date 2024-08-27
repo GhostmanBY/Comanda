@@ -1,4 +1,5 @@
 import os
+import time
 import random
 from datetime import datetime
 import sqlite3
@@ -40,10 +41,9 @@ def crear_tablas():
 
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Usuarios(
-        Mozo text,
-        Codigo text,
-        Plaza integer,
-        Ingreso text)"""
+        Mozo TEXT,
+        Codigo TEXT PRIMARY KEY,
+        Plaza INTEGER)"""
     )
 
     conn.commit()
@@ -93,12 +93,12 @@ def Eliminar_Producto(name):
     conn.commit()
     conn.close()
 
-def Registro_Empleado(name, codigo, Plaza, Fecha):
+def Registro_Empleado(name, codigo, Plaza):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
 
-    instruccion = f"INSERT INTO Usuarios VALUES('{name}', '{codigo}', {Plaza}, '{Fecha}')"
-    cursor.execute(instruccion)
+    instruccion = f"INSERT INTO Usuarios (mozo, codigo, plaza) VALUES (?, ?, ?)"
+    cursor.execute(instruccion, (name, codigo, Plaza))
 
     conn.commit()
     conn.close()
@@ -121,18 +121,18 @@ def Modificar_Empleados(name, categoria, valor):
     conn  = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
     
-    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}"
+    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}'"
     cursor.execute(instruccion)
     
     datos = cursor.fetchall()
     
-    if datos != []:
-        instruccion = f"UPDATE Usuarios SET {categoria} = {valor} WHERE Mozo like {name}"
-        cursor.execute(instruccion)
+    if datos:
+        instruccion = f"UPDATE Usuarios SET {categoria} = ? WHERE Mozo like ?"
+        cursor.execute(instruccion, (valor, name))
+        conn.commit()
     else:
         return "No se encunetra el nombre del mozo ingresado"
         
-    conn.commit()
     conn.close()
     
 def verificar(name, code):
@@ -217,7 +217,7 @@ RTA: """))
                     os.system("cls")
         elif po == 2:
             pop = 0
-            while pop != 5:
+            while pop != 6:
                 pop = int(input("""
 Ingrese la opciona que quiere realizar:
 1- Registrar nuevo empleado
@@ -229,7 +229,6 @@ Ingrese la opciona que quiere realizar:
 RTA: """))
                 if pop == 1:
                     datos = Mostrar_Empleados()
-                    numero = len(datos) + 1
                     
                     name = input("Ingrese el nombre del mozo: ")
                     
@@ -237,7 +236,7 @@ RTA: """))
 
                     Plaza = int(input("Ingrese la plaza a la que va a estar asiganado: "))
         
-                    Registro_Empleado(numero, name, codigo, Plaza)
+                    Registro_Empleado(name, codigo, Plaza)
                     input("Presione enter...")
                     os.system("cls")
                 elif pop == 2:
@@ -245,16 +244,29 @@ RTA: """))
                     for i in range(0, len(datos)):
                         for j in range(0, 4):
                             if j == 0:
-                                print(f"Numero: {datos[i][j]}")
-                            elif j == 1:
                                 print(f"Mozo: {datos[i][j]}")
-                            elif j == 2:
+                            elif j == 1:
                                 print(f"Codigo: {datos[i][j]}")
-                            elif j == 3:
+                            elif j == 2:
                                 print(f"Plaza: {datos[i][j]}")
                         print("-"*15)
                     input("Preisone Enter...")
                     os.system("cls")
+                elif pop == 3:
+                    name = input("Ingrese el nombre del mozo: ")
+                    categoria = input("Que quiere cambiar el codigo o la plaza?: ")
+                    if categoria.capitalize() == "Codigo":
+                        valor_nuevo = Generar_Codigo()
+                        print("Espere cambiando codigo...")
+                        time.sleep(5)
+                        input("Cambiado con exito!!(Preisone enter...)")
+                    elif categoria.capitalize() == "Plaza":
+                        valor_nuevo = int(input("Ingrese la nueva plaza: "))
+                        input("Preisone Enter...")
+
+                    Modificar_Empleados(name, categoria, valor_nuevo)
+                    os.system("cls")
+
                 elif pop == 5:
                     name = input("Ingrese su nombre: ")
                     code = input("Ingrese su codigo: ")
