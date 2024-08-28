@@ -5,6 +5,13 @@ import sqlite3
 
 ruta_db = os.path.join("DB", "Panel_admin.db")
 
+def limpiar():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
 #Funcion que genera un codigo con 4 letras y 3 numeros, para la identificacion de los mozos
 def Generar_Codigo():    
     lista_Letras = ["A", "B", "C", "D", "E", "F", "G",
@@ -151,7 +158,7 @@ def Eliminar_empleados(name):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor() 
     
-    instruccion = f"DELETE FROM Productos WHERE Mozo like '{name}'" #Elimina la fila en la que este el nombre que se le ingresa por eso DELETE
+    instruccion = f"DELETE FROM Usuarios WHERE Mozo like '{name}'" #Elimina la fila en la que este el nombre que se le ingresa por eso DELETE
     cursor.execute(instruccion) #Ejecuta la accion 
     
     conn.commit() #Guarda los cambios hechos a la base de datos
@@ -162,8 +169,8 @@ def verificar(name, code):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor() 
     
-    instruccion = f"SELECT * from Usuarios WHERE Mozo like '{name}'" #Captura en especifico de la columna mozo el nombre que se le ingresa
-    cursor.execute(instruccion) #Ejecuta la accion 
+    instruccion = f"SELECT * from Usuarios WHERE Mozo like ?" #Captura en especifico de la columna mozo el nombre que se le ingresa
+    cursor.execute(instruccion, (name)) #Ejecuta la accion 
     
     datos = cursor.fetchall() #La variable datos pasa a tener todos los valores que tiene cursos, metiendo en una lista con sub indices
     
@@ -185,7 +192,7 @@ if __name__ == "__main__":
     #Menu inicial
     po = 0
     while po != 3: #Ciclo para que se muestre hasta que el usuario quiera salir
-        os.system("cls")
+        limpiar()
         po = int(input("""
 Ingrese la opcion que quiere realizar
 1- Carta
@@ -210,9 +217,9 @@ RTA: """))
                     nombre = input("Ingrese el nombre del producto: ")
                     precio = int(input("Ingrese el precio del producto: "))
                     Cargar_Producto(nombre, precio)
-                    
+
                     input("Presione enter...")
-                    os.system("cls")
+                    limpiar()
 
                 elif op == 2:
                     datos = Mostrar_Productos()
@@ -225,7 +232,7 @@ RTA: """))
                         print("-"*15)
 
                     input("Preisone Enter...")
-                    os.system("cls")
+                    limpiar()
 
                 elif op == 3:
                     nombre = input("Ingrese el nombre del producto: ")
@@ -234,14 +241,14 @@ RTA: """))
                     Modificar_Productos(nombre, categoria.capitalize(), valor_nuevo)
                     
                     input("Presione enter...")
-                    os.system("cls")
+                    limpiar()
 
                 elif op == 4:
                     nombre = input("Ingrese el nombre del producto a eliminar: ")
                     Eliminar_Producto(nombre)
 
                     input("Presione enter...")
-                    os.system("cls")
+                    limpiar()
 
         elif po == 2:
 
@@ -270,7 +277,7 @@ RTA: """))
                     Registro_Empleado(name, codigo, Plaza)
 
                     input("Presione enter...")
-                    os.system("cls")
+                    limpiar()
                 elif pop == 2:
                     datos = Mostrar_Empleados()
                     for i in range(0, len(datos)):
@@ -284,7 +291,7 @@ RTA: """))
                         print("-"*15)
 
                     input("Preisone Enter...")
-                    os.system("cls")
+                    limpiar()
 
                 elif pop == 3:
                     name = input("Ingrese el nombre del mozo: ")
@@ -302,14 +309,14 @@ RTA: """))
                         input("Preisone Enter...")
 
                     Modificar_Empleados(name, categoria, valor_nuevo)
-                    os.system("cls")
+                    limpiar()
                     
                 elif pop == 4:
                     name = input("Ingrese el nombre del mozo a eliminar: ")
                     Eliminar_empleados(name)
 
                     input("Preisone Enter...")
-                    os.system("cls")
+                    limpiar()
                 
                 elif pop == 5:
                     name = input("Ingrese su nombre: ")
@@ -324,4 +331,4 @@ RTA: """))
                         print("Su codigo no es correcto")
 
                     input("Preisone Enter...")
-                    os.system("cls")
+                    limpiar()
