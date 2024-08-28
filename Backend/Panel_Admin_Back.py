@@ -35,8 +35,7 @@ def crear_tablas():
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS Productos(
         Nombre text,
-        Precio integer,
-        Stock integer)"""
+        Precio integer,)"""
     )
 
     cursor.execute(
@@ -49,12 +48,12 @@ def crear_tablas():
     conn.commit()
     conn.close()
 
-def Cargar_Producto(name, precio, stock):
+def Cargar_Producto(name, precio):
     conn = sqlite3.connect(ruta_db)
     cursor = conn.cursor()
     
-    instruccion = "INSERT INTO Productos (nombre, precio, stock) VALUES (?, ?, ?)"
-    cursor.execute(instruccion, (name, precio, stock))
+    instruccion = "INSERT INTO Productos (nombre, precio) VALUES (?, ?)"
+    cursor.execute(instruccion, (name, precio))
 
     conn.commit()
     conn.close()
@@ -134,6 +133,16 @@ def Modificar_Empleados(name, categoria, valor):
         return "No se encunetra el nombre del mozo ingresado"
         
     conn.close()
+
+def Eliminar_empleados(name):
+    conn = sqlite3.connect(ruta_db)
+    cursor = conn.cursor()
+    
+    instruccion = f"DELETE FROM Productos WHERE Mozo like '{name}'"
+    cursor.execute(instruccion)
+    
+    conn.commit()
+    conn.close()
     
 def verificar(name, code):
     conn = sqlite3.connect(ruta_db)
@@ -183,21 +192,18 @@ RTA: """))
                 if op == 1:
                     nombre = input("Ingrese el nombre del producto: ")
                     precio = int(input("Ingrese el precio del producto: "))
-                    stock = int(input("Ingrese el stock del producto: "))
-                    Cargar_Producto(nombre, precio, stock)
+                    Cargar_Producto(nombre, precio)
                     input("Presione enter...")
                     os.system("cls")
 
                 elif op == 2:
                     datos = Mostrar_Productos()
                     for i in range(0, len(datos)):
-                        for j in range(0, 3):
+                        for j in range(0, 2):
                             if j == 0:
                                 print(f"Nombre: {datos[i][j]}")
                             elif j == 1:
                                 print(f"Precio: {datos[i][j]}")
-                            elif j == 2:
-                                print(f"Stock: {datos[i][j]}")
                         print("-"*15)
                     input("Preisone Enter...")
                     os.system("cls")
@@ -263,10 +269,15 @@ RTA: """))
                     elif categoria.capitalize() == "Plaza":
                         valor_nuevo = int(input("Ingrese la nueva plaza: "))
                         input("Preisone Enter...")
-
                     Modificar_Empleados(name, categoria, valor_nuevo)
                     os.system("cls")
-
+                    
+                elif pop == 4:
+                    name = input("Ingrese el nombre del mozo a eliminar: ")
+                    Eliminar_empleados(name)
+                    input("Preisone Enter...")
+                    os.system("cls")
+                
                 elif pop == 5:
                     name = input("Ingrese su nombre: ")
                     code = input("Ingrese su codigo: ")
