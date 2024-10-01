@@ -3,7 +3,7 @@
     "Disponibilidad": false,
     "Comensales": 0,
     "Comensales infatiles": [
-        true,
+        false,
         0
     ],
     "Productos": [],
