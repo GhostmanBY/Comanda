@@ -1,0 +1,12 @@
+{
+    "Mesa": 1,
+    "Disponibilidad": false,
+    "Comensales": 0,
+    "Comensales infatiles": [
+        true,
+        0
+    ],
+    "Productos": [],
+    "Mozo": "Nahuel",
+    "Hora Apertura": "13:33"
+}
