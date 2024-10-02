@@ -38,4 +38,4 @@ for i in range (1, 21):
     boton_mesa.grid(row=(i-1)//2,column=(i-1)%2,padx=10,pady=10)
 
 #mostrar ventana
-ventana.mainloop()
+ventana.mainloop()nahuel gay
