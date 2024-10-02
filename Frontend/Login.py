@@ -6,7 +6,7 @@ from Ventana_Principal import ventana2
 from PIL import Image
 import sqlite3
 
-'''ruta_db = os.path.join("DB", "Panel_admin.db")
+ruta_db = os.path.join("DB", "Panel_admin.db")
 # Login.py
 
 def ventana_emergente(messege):
