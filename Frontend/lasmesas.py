@@ -37,5 +37,5 @@ for i in range (1, 21):
                   text=f"Mesa {i}",width=150,height=80)
     boton_mesa.grid(row=(i-1)//2,column=(i-1)%2,padx=10,pady=10)
 
-#mostrar ventana
+#mostrar ventana hola
 ventana.mainloop()
