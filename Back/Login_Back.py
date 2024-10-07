@@ -32,6 +32,6 @@ def verificar_login(code: int):
 if __name__ == "__main__":
     Verificacion = verificar_login("UEHS065")
     if isinstance(Verificacion, dict) == True:
-        print(f"Se a logiado exitosamente señor {Verificacion["Nombre"]}") 
+        print(f"Se a logiado exitosamente señor {Verificacion['Nombre']}") 
     else:
         print(f"Su codigo no es correcto o usted no esta en el sistema")
