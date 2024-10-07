@@ -33,7 +33,7 @@ def abrir_mesa(mesa: int, mozo: str):
     with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "w", encoding="utf-8") as file:
         json.dump(mesa_tem, file, indent= 4, ensure_ascii=False)
 
-def editar_mesa(Lista_cambios: list, mesa: int):
+def editar_mesa(categoria: str, valor, mesa: int):
     with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "r", encoding="utf-8") as file:
         mesa_tem = json.load(file)
 
@@ -41,8 +41,14 @@ def editar_mesa(Lista_cambios: list, mesa: int):
         if i % 2 == 0:
             mesa_tem
             pass
-
+          
+    with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "w", encoding="utf-8") as file:
+        json.dump(mesa_tem, file, indent= 4, ensure_ascii=False)
+        
 if __name__ == "__main__":
     #mesa_tmp(10)
     abrir_mesa(1, "Nahuel")
+    editar_mesa("Comensales", 2, 1)
+    editar_mesa("Comensales infatiles", 2, 1)
+    editar_mesa("Productos", ["Café expreso"])
     pass

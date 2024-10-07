@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from customtkinter import *
-from Ventana_Principal import main
+from Ventana_Principal import ventana2
+from PIL import Image
 import sqlite3
 
 ruta_db = os.path.join("DB", "Panel_admin.db")
@@ -38,16 +39,11 @@ letra = "Arial", 30, "bold"
 #Funcion que cierra la ventana del login y llama a la ventana principal
 def accion(codigo, ventana):
     ventana.destroy() #destruye la ventana
-    main(codigo) #llama a la funcion del archivo Ventana_Principal
-
-from tkinter import messagebox
-from customtkinter import *
-from PIL import Image
-
-#def verificación():
-
-
-
+    main(codigo) #llama a la funcion del archivo Ventana_Principal'''
+    
+def continua():
+    root.destroy()
+    ventana2()
 
 root = CTk()
 root.title("Login")
@@ -58,7 +54,7 @@ root.configure(fg_color="#FF6103")
 frame1 = CTkFrame(master=root, width=400, height=100, fg_color="white")
 frame1.pack(pady=10)
 
-foto = Image.open("nombre.png")
+foto = Image.open("Frontend/nombre.png")
 ft = CTkImage(foto, size=(200, 200))  
 label1 = CTkLabel(master=frame1, image=ft, text="")
 label1.pack(pady=10)
@@ -67,7 +63,7 @@ label1.pack(pady=10)
 entry_usuario = CTkEntry(master=frame1, placeholder_text="AOE505", fg_color="white", border_color="white", width=100, height=40)
 entry_usuario.pack(pady=20)
 
-boton1 = CTkButton(master=frame1,text="LOG IN", fg_color="#FF6103", command=verificar)
+boton1 = CTkButton(master=frame1,text="LOG IN", fg_color="#FF6103", command=continua)
 boton1.pack(pady=20)
 
 root.mainloop()

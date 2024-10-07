@@ -1,4 +1,4 @@
-import sys
+'''import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QPushButton, QVBoxLayout, QWidget
 from PyQt5.QtCore import Qt
 
@@ -40,3 +40,20 @@ def main(codigo):
 
 if __name__ == "__main__":
     main("AOE505")
+'''
+from customtkinter import *
+
+def ventana2():
+    root2=CTk()
+    root2.title("MESAS")
+    root2.geometry("400x400")
+    root2.configure(fg_color="white")
+    mesas = ["MESA 01", "MESA 02", "MESA 03"]
+
+    menu_desplegable = CTkComboBox(root2, values=mesas,fg_color="#FF6103",border_color="#FF6103")
+    menu_desplegable.place(rely=0.1,relx=0.3)
+
+    boton1=CTkButton(root2,text="CONTINUAR",fg_color="#FF6103")
+    boton1.place(rely=0.7,relx=0.3)
+
+    root2.mainloop()
