@@ -7,7 +7,6 @@ ctk.set_appearance_mode("System")
 #Tema del sistema
 ctk.set_default_color_theme("blue")
 #tema del color
-
 #Crear ventana principal orientada a pantall de celular
 
 ventana = ctk.CTk()
