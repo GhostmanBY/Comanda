@@ -2,11 +2,11 @@
 import tkinter as tk
 from tkinter import messagebox
 from customtkinter import *
-from Ventana_Principal import ventana2
+import lasmesas
 from PIL import Image
 import sqlite3
 
-ruta_db = os.path.join("DB", "Panel_admin.db")
+'''ruta_db = os.path.join("DB", "Panel_admin.db")
 # Login.py
 
 def ventana_emergente(messege):
@@ -43,7 +43,7 @@ def accion(codigo, ventana):
     
 def continua():
     root.destroy()
-    ventana2()
+    lasmesas()
 
 root = CTk()
 root.title("Login")
