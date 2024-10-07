@@ -29,12 +29,14 @@ def mostrar_mesas():
     
     frame_mesas = ctk.CTkScrollableFrame(ventana, width=900, height=600)  # Scrollable frame para las mesas
     frame_mesas.pack(pady=20, padx=20, fill="both", expand=True)
-    
+  # Especificar la fuente
+    fuente = ctk.CTkFont(family="Segoe UI Black", size=14)  # Definir la fuente
     for i in range(num_mesas):
         fila = i // mesas_por_fila  # Calcular la fila actual
         columna = i % mesas_por_fila  # Calcular la columna actual
         
-        boton_mesa = ctk.CTkButton(frame_mesas, text=f"Mesa {i+1}", width=150, height=100, fg_color="#FF6103")
+        boton_mesa = ctk.CTkButton(frame_mesas, text=f"Mesa {i+1}", width=150, height=100, fg_color="#FF6103",font=fuente)
+        
         boton_mesa.grid(row=fila, column=columna, padx=20, pady=20)
 
 
