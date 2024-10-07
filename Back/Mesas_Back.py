@@ -40,6 +40,7 @@ def editar_mesa(Lista_cambios: list, mesa: int):
     for i in range(len(Lista_cambios)):
         if i % 2 == 0:
             mesa_tem
+            pass
 
 if __name__ == "__main__":
     #mesa_tmp(10)
