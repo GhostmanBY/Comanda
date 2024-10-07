@@ -33,6 +33,7 @@ def abrir_mesa(mesa: int, mozo: str):
     with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "w", encoding="utf-8") as file:
         json.dump(mesa_tem, file, indent= 4, ensure_ascii=False)
 
+#funcion para editar la mesa
 def editar_mesa(categoria: str, valor, mesa: int):
     with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "r", encoding="utf-8") as file:
         mesa_tem = json.load(file)
