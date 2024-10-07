@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from customtkinter import *
-from Ventana_Principal import ventana2
+'''from Ventana_Principal import ventana2'''
 from PIL import Image
 import sqlite3
 import os
