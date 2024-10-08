@@ -34,7 +34,13 @@ def mostrar_mesas():
         fila = i // mesas_por_fila  # Calcular la fila actual
         columna = i % mesas_por_fila  # Calcular la columna actual
         
-        boton_mesa = ctk.CTkButton(frame_mesas, text=f"Mesa {i+1}", width=150, height=100, fg_color="#FF6103",font=fuente)
+        boton_mesa = ctk.CTkButton(frame_mesas, 
+         text=f"Mesa {i+1}", 
+         width=150,
+         height=100, 
+         fg_color="#FF6103",
+         font=fuente,
+         hover_color="gray")
         
         boton_mesa.grid(row=fila, column=columna, padx=20, pady=20)
 
