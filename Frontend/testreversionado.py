@@ -1,8 +1,10 @@
 
+
 from customtkinter import *
 from PIL import Image, ImageTk
 import os
 import sqlite3
+from tkinter import messagebox  # Asegúrate de importar messagebox si lo usas
 
 ruta_db = os.path.join("DB", "Panel_admin.db")
 
@@ -35,13 +37,13 @@ def verificar(code):
 # Configuración de la ventana principal
 root = CTk()
 root.title("Login")
-root.geometry("1024x768")  # Ajuste a pantalla de escritorio
+root.geometry("1024x768")
 root.configure(fg_color="#FF6103")
-root.resizable(True, True)  # Permite redimensionar la ventana
+root.resizable(True, True)
 
 # Frame principal
 frame_login = CTkFrame(master=root, width=400, height=768, fg_color="white")
-frame_login.grid(row=0, column=0, sticky="ns")  # Colocar en el lado izquierdo y hacer que ocupe toda la altura
+frame_login.grid(row=0, column=0, sticky="ns")
 
 # Imagen del logo
 foto = Image.open("Frontend/nombre.png")
@@ -64,9 +66,12 @@ boton1.pack(pady=20)
 def Cambio_fram(Text):
     # Ocultar elementos originales
     # Se supone que estas variables están definidas previamente
-    texto_label.place_forget()
-    campo_label.place_forget()
-    boton_cambio.place_forget()
+    try:
+        texto_label.place_forget()
+        campo_label.place_forget()
+        boton_cambio.place_forget()
+    except Exception as e:
+        print("Error al ocultar elementos:", e)
 
     print(f"Texto del entry: {Text}")
 
@@ -74,28 +79,31 @@ def Cambio_fram(Text):
     frame_tab_opciones.place(relx=0.25, rely=0, relwidth=0.75, relheight=1)
 
     # Configurar la imagen de fondo
-    background = Image.open("Frontend/imagenes/platocubiertos.jpeg")  # Cambiar por la ruta de tu imagen
-    background = background.resize((800, 700))  # Ajustar el tamaño
-    bg_image = ImageTk.PhotoImage(background)
+    try:
+        background = Image.open("Frontend/imagenes/platocubiertos.jpeg")  # la ruta de la imagen
+        background = background.resize((800, 700))  # Ajustar el tamaño
+        bg_image = ImageTk.PhotoImage(background)
 
-    # Crear un Label con la imagen de fondo
-    bg_label = CTkLabel(frame_tab_opciones, image=bg_image)
-    bg_label.image = bg_image  # Mantener una referencia
-    bg_label.place(relwidth=1, relheight=1)  # Hacer que ocupe todo el frame
+        # Crear un Label con la imagen de fondo
+        bg_label = CTkLabel(frame_tab_opciones, image=bg_image)
+        bg_label.image = bg_image  # Mantener una referencia
+        bg_label.place(relwidth=1, relheight=1)  # Hacer que ocupe todo el frame
 
-    text_mozo = CTkLabel(frame_tab_opciones, text="Alta mozo", width=100, height=50)
-    text_mozo.place(relx=0.3, rely=0.1)
+        text_mozo = CTkLabel(frame_tab_opciones, text="Alta mozo", width=100, height=50)
+        text_mozo.place(relx=0.3, rely=0.1)
 
-    entry_mozo = CTkEntry(frame_tab_opciones, width=100, height=50, placeholder_text="nombre")
-    entry_mozo.place(relx=0.3, rely=0.2)
+        entry_mozo = CTkEntry(frame_tab_opciones, width=100, height=50, placeholder_text="nombre")
+        entry_mozo.place(relx=0.3, rely=0.2)
+
+    except Exception as e:
+        print("Error al cargar la imagen de fondo:", e)
 
 # Frame para separar el espacio de login
-frame_tab_opciones = CTkFrame(root, width=800, height=700)  # Ajustar dimensiones según sea necesario
-#frame_tab_opciones.grid(row=0, column=1, sticky="nsew")  # Reemplace esta línea con el uso de place() más adelante
+frame_tab_opciones = CTkFrame(root, width=800, height=700)
 
 # Configurar filas y columnas para expandir el frame
-root.grid_rowconfigure(0, weight=1)  # Permitir que la fila 0 se expanda
-root.grid_columnconfigure(1, weight=1)  # Permitir que la columna 1 se expanda
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(1, weight=1)
 
 # Mostrar ventana 
 root.mainloop()

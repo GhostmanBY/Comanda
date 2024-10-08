@@ -46,7 +46,7 @@ check_ninos.pack(pady=5)
 #campo para indicar la cantidad de niños
 entry_cantidad_ninos=ctk.CTkEntry(ventana,width=100,placeholder_text="Cantidad de niños")
 entry_cantidad_ninos.pack(pady=5)
-
+'''
 #Seccion para los botones de menu
 label_menu=ctk.CTkLabel(ventana,
 text="Selecciona opcion del menu:")
@@ -75,5 +75,5 @@ boton_postres = ctk.CTkButton(frame_menu,
 text="Postres", width=100)
 boton_postres.grid(row=2,
 column=0,columnspan=2,pady=5,padx=15)
-
+'''
 ventana.mainloop()
