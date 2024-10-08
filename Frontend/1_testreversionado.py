@@ -1,5 +1,3 @@
-
-
 from customtkinter import *
 from PIL import Image, ImageTk
 import os
@@ -42,8 +40,9 @@ root.configure(fg_color="#FF6103")
 root.resizable(True, True)
 
 # Frame principal
-frame_login = CTkFrame(master=root, width=400, height=768, fg_color="white")
+frame_login = CTkFrame(master=root, width=800, height=768, fg_color="white")
 frame_login.grid(row=0, column=0, sticky="ns")
+
 
 # Imagen del logo
 foto = Image.open("Frontend/nombre.png")
@@ -59,7 +58,7 @@ entry_usuario.pack(pady=20)
 
 # Botón de inicio de sesión
 fuente = CTkFont(family="Segoe UI Black", size=14)
-boton1 = CTkButton(master=frame_login, text="LOG IN", fg_color="#FF6103", command=lambda: verificar(entry_usuario.get()), width=150, height=40, font=fuente)
+boton1 = CTkButton(master=frame_login, text="LOG IN", fg_color="#FF6103", command=lambda: verificar(entry_usuario.get()), width=200, height=40, font=fuente)
 boton1.pack(pady=20)
 
 # Parte del código original
@@ -99,7 +98,7 @@ def Cambio_fram(Text):
         print("Error al cargar la imagen de fondo:", e)
 
 # Frame para separar el espacio de login
-frame_tab_opciones = CTkFrame(root, width=800, height=700)
+frame_tab_opciones = CTkFrame(root, width=900, height=700)
 
 # Configurar filas y columnas para expandir el frame
 root.grid_rowconfigure(0, weight=1)
