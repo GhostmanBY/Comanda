@@ -50,7 +50,17 @@ def editar_mesa(categoria: str, valor, mesa: int):
 
     with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "w", encoding="utf-8") as file:
         json.dump(mesa_tem, file, indent= 4, ensure_ascii=False)
+
+    def cerrar_mesa(mesa:int):
+        fecha_cierre=datetime.datetime.now()
+        hora_cierre = fecha_cierre.strftime("%H:%M")
         
+        try:
+            with open(os.path.join(base_dir, f"../tmp/Mesa {mesa}.json"), "r", encoding="utf-8") as file:
+                m_temporal = json.load(file)
+        except FileNotFoundError:
+            return f"Error: La mesa {mesa} no existe."
+
 if __name__ == "__main__":
     #mesa_tmp(10)
     abrir_mesa(1, "Nahuel")
