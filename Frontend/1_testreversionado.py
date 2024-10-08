@@ -6,6 +6,9 @@ from tkinter import messagebox  # Asegúrate de importar messagebox si lo usas
 
 ruta_db = os.path.join("DB", "Panel_admin.db")
 
+def maximizar_pantalla():
+    root.state("zoom")
+
 # Función para mostrar ventana emergente
 def ventana_emergente(mensaje):
     messagebox.showinfo("Aviso", f"{mensaje}")
@@ -35,9 +38,9 @@ def verificar(code):
 # Configuración de la ventana principal
 root = CTk()
 root.title("Login")
-root.geometry("1024x768")
-root.configure(fg_color="#FF6103")
-root.resizable(True, True)
+root.geometry("600x400")
+root.after(100,maximizar_pantalla)
+#root.configure(fg_color="#FF6103")
 
 # Frame principal
 frame_login = CTkFrame(master=root, width=800, height=768, fg_color="white")
@@ -47,6 +50,7 @@ frame_login.grid(row=0, column=0, sticky="ns")
 # Imagen del logo
 foto = Image.open("Frontend/nombre.png")
 ft = CTkImage(foto, size=(250, 250))
+frame_image = CTkFrame(frame_login)
 label1 = CTkLabel(master=frame_login, image=ft, text="")
 label1.pack(pady=10)
 
@@ -77,25 +81,25 @@ def Cambio_fram(Text):
     # Mostrar el frame con el fondo de la imagen
     frame_tab_opciones.place(relx=0.25, rely=0, relwidth=0.75, relheight=1)
 
-    # Configurar la imagen de fondo
-    try:
-        background = Image.open("Frontend/imagenes/platocubiertos.jpeg")  # la ruta de la imagen
-        background = background.resize((800, 700))  # Ajustar el tamaño
-        bg_image = ImageTk.PhotoImage(background)
+# Configurar la imagen de fondo
 
-        # Crear un Label con la imagen de fondo
-        bg_label = CTkLabel(frame_tab_opciones, image=bg_image)
-        bg_label.image = bg_image  # Mantener una referencia
-        bg_label.place(relwidth=1, relheight=1)  # Hacer que ocupe todo el frame
+    background = Image.open("C:/Users/PC6/Documents/GitHub/Comanda/Frontend/lol.png")  # la ruta de la imagen
+    print("cargando")
+    background = background.resize((800, 700))  # Ajustar el tamaño
+    bg_image = ImageTk.PhotoImage(background)
 
-        text_mozo = CTkLabel(frame_tab_opciones, text="Alta mozo", width=100, height=50)
-        text_mozo.place(relx=0.3, rely=0.1)
+    # Crear un Label con la imagen de fondo
+    bg_label = CTkLabel(master=frame_tab_opciones, image=bg_image,text="asddsa")
+    bg_label.image = bg_image  # Mantener una referencia
+    bg_label.place(relwidth=1, relheight=1)  # Hacer que ocupe todo el frame
 
-        entry_mozo = CTkEntry(frame_tab_opciones, width=100, height=50, placeholder_text="nombre")
-        entry_mozo.place(relx=0.3, rely=0.2)
+    text_mozo = CTkLabel(frame_tab_opciones, text="Alta mozo", width=100, height=50)
+    text_mozo.place(relx=0.3, rely=0.1)
 
-    except Exception as e:
-        print("Error al cargar la imagen de fondo:", e)
+    entry_mozo = CTkEntry(frame_tab_opciones, width=100, height=50, placeholder_text="nombre")
+    entry_mozo.place(relx=0.3, rely=0.2)
+
+
 
 # Frame para separar el espacio de login
 frame_tab_opciones = CTkFrame(root, width=900, height=700)
