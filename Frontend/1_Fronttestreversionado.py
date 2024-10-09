@@ -1,10 +1,17 @@
 # frontend.py
 
-from customtkinter import *
-from PIL import Image, ImageTk
-from backend import verificar  # Importa la función que verifica el código
+import sys
 import os
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from customtkinter import *
+from tkinter import messagebox
+from PIL import Image, ImageTk
+from Back.Login_Back import verificar_login # Importa la función que verifica el código
+
+def maximizar_pantalla():
+    root.state("zoom")
 # Configuración de la ventana principal
 root = CTk()
 root.title("Login")
@@ -27,7 +34,7 @@ frame_login.grid(row=0, column=0, sticky="ns")
 foto = Image.open("Frontend/imagenes/nombre.png")
 ft = CTkImage(foto, size=(250, 250))
 label1 = CTkLabel(master=frame_login, image=ft, text="")
-label1.pack(pady=10)
+label1.place(pady=10)
 
 # Campo de texto para el código del usuario
 fuente = CTkFont(family="Segoe UI", size=14)
@@ -38,7 +45,7 @@ entry_usuario.pack(pady=20)
 # Botón de inicio de sesión
 fuente = CTkFont(family="Segoe UI Black", size=14)
 boton1 = CTkButton(master=frame_login, text="LOG IN", fg_color="#FF6103", 
-                   command=lambda: verificar(entry_usuario.get(), ventana_emergente), 
+                   command=lambda: verificar_login(entry_usuario.get()), 
                    width=200, height=40, font=fuente)
 boton1.pack(pady=20)
 

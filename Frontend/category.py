@@ -1,14 +1,11 @@
-import customtkinter as ctk
+from customtkinter import *
 
 #Desarrollo un menu con las categorias de comida disponibles
 
-class category:
-    def ventana (self):
-        self.ventana1=ctk.CTk()
-        self.ventana1.geometry("1000x800")
-        self.ventana1.title("CATEGORIAS")
-        self.label1=ctk.CTkLabel()
-        self.label1.geometry("999x799")
-        self.ventana1.mainloop
+ventana1=CTk()
+ventana1.geometry("1000x800")
+ventana1.title("CATEGORIAS")
+ventana1.configure(fg_color="black")
+set_appearance_mode("dark")
 
-categorias=category()        
+ventana1.mainloop()
