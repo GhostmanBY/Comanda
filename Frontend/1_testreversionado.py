@@ -48,7 +48,7 @@ frame_login.grid(row=0, column=0, sticky="ns")
 
 
 # Imagen del logo
-foto = Image.open("Frontend/nombre.png")
+foto = Image.open("Frontend/imagenes/nombre.png")
 ft = CTkImage(foto, size=(250, 250))
 frame_image = CTkFrame(frame_login)
 label1 = CTkLabel(master=frame_login, image=ft, text="")
